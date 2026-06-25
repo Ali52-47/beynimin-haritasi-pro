@@ -13,7 +13,7 @@ body {
     color: white;
     background:
         linear-gradient(rgba(2, 6, 23, 0.62), rgba(2, 6, 23, 0.92)),
-        url("/images/evren.jpg");
+        url("/beynimin-haritasi-pro/images/evren.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -378,7 +378,7 @@ canvas {
     position: fixed;
     inset: 0;
     z-index: 0;
-    background-image: url("/images/evren.jpg");
+    background-image: url("/beynimin-haritasi-pro/images/evren.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

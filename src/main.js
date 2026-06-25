@@ -39,9 +39,9 @@ let hoveredNode = null;
 ========================================================= */
 
 const musicPaths = [
-    '/music/ambient.mp3',
-    '/music/ambiment.mp3',
-    '/music/music.mp3'
+    '/beynimin-haritasi-pro/music/ambient.mp3',
+    '/beynimin-haritasi-pro/music/ambiment.mp3',
+    '/beynimin-haritasi-pro/music/music.mp3'
 ];
 
 let activeMusicIndex = 0;
@@ -67,7 +67,7 @@ const interests = [
         title: 'Yazılım',
         icon: '💻',
         color: '#38bdf8',
-        backgroundImage: '/images/software.png',
+        backgroundImage: '/beynimin-haritasi-pro/images/software.png',
         basePosition: new THREE.Vector3(0, 12.3, 0),
         motionRadius: 0.42,
         motionSpeed: 0.70,
@@ -90,7 +90,7 @@ const interests = [
         title: 'Üniversite',
         icon: '🎓',
         color: '#22c55e',
-        backgroundImage: '/images/university.png',
+        backgroundImage: '/beynimin-haritasi-pro/images/university.png',
         basePosition: new THREE.Vector3(12.2, 9.3, 0),
         motionRadius: 0.42,
         motionSpeed: 0.60,
@@ -113,7 +113,7 @@ const interests = [
         title: 'Futbol',
         icon: '⚽',
         color: '#facc15',
-        backgroundImage: '/images/fenerbahce.png',
+        backgroundImage: '/beynimin-haritasi-pro/images/fenerbahce.png',
         basePosition: new THREE.Vector3(17.2, 2.2, 0),
         motionRadius: 0.40,
         motionSpeed: 0.55,
@@ -136,7 +136,7 @@ const interests = [
         title: 'Projeler',
         icon: '🚀',
         color: '#fb7185',
-        backgroundImage: '/images/projects.png',
+        backgroundImage: '/beynimin-haritasi-pro/images/projects.png',
         basePosition: new THREE.Vector3(13.8, -8.8, 0),
         motionRadius: 0.42,
         motionSpeed: 0.64,
@@ -159,7 +159,7 @@ const interests = [
         title: 'Teknoloji',
         icon: '🤖',
         color: '#a855f7',
-        backgroundImage: '/images/technology.png',
+        backgroundImage: '/beynimin-haritasi-pro/images/technology.png',
         basePosition: new THREE.Vector3(6.0, -13.2, 0),
         motionRadius: 0.40,
         motionSpeed: 0.58,
@@ -182,7 +182,7 @@ const interests = [
         title: 'Tarih',
         icon: '🏛️',
         color: '#f97316',
-        backgroundImage: '/images/history.png',
+        backgroundImage: '/beynimin-haritasi-pro/images/history.png',
         basePosition: new THREE.Vector3(-6.0, -13.2, 0),
         motionRadius: 0.40,
         motionSpeed: 0.56,
@@ -205,7 +205,7 @@ const interests = [
         title: 'Kuantum',
         icon: '⚛️',
         color: '#06b6d4',
-        backgroundImage: '/images/quantum.png',
+        backgroundImage: '/beynimin-haritasi-pro/images/quantum.png',
         basePosition: new THREE.Vector3(-13.8, -8.8, 0),
         motionRadius: 0.40,
         motionSpeed: 0.54,
@@ -228,7 +228,7 @@ const interests = [
         title: 'Diziler',
         icon: '🎬',
         color: '#ec4899',
-        backgroundImage: '/images/series.png',
+        backgroundImage: '/beynimin-haritasi-pro/images/series.png',
         basePosition: new THREE.Vector3(-17.2, 2.2, 0),
         motionRadius: 0.40,
         motionSpeed: 0.52,
@@ -251,7 +251,7 @@ const interests = [
         title: 'Siber Güvenlik',
         icon: '🛡️',
         color: '#10b981',
-        backgroundImage: '/images/cyber_security.png',
+        backgroundImage: '/beynimin-haritasi-pro/images/cyber_security.png',
         basePosition: new THREE.Vector3(-12.2, 9.3, 0),
         motionRadius: 0.42,
         motionSpeed: 0.62,
@@ -279,14 +279,14 @@ const scene = new THREE.Scene();
 const textureLoader = new THREE.TextureLoader();
 
 textureLoader.load(
-    '/images/evren.jpg',
+    '/beynimin-haritasi-pro/images/evren.jpg',
     function (texture) {
         texture.colorSpace = THREE.SRGBColorSpace;
         scene.background = texture;
     },
     undefined,
     function () {
-        console.warn('Evren görseli yüklenemedi. public/images/evren.jpg yolunu kontrol et.');
+        console.warn('Evren görseli yüklenemedi. public/beynimin-haritasi-pro/images/evren.jpg yolunu kontrol et.');
     }
 );
 
@@ -886,7 +886,7 @@ function resetCamera() {
 ========================================================= */
 
 function openDetail(node) {
-    const bgPath = node.backgroundImage || '/images/evren.jpg';
+    const bgPath = node.backgroundImage || '/beynimin-haritasi-pro/images/evren.jpg';
 
     detailBg.style.opacity = '0';
 
@@ -928,7 +928,7 @@ function openDetail(node) {
 
 function closeDetailPanel() {
     detailPanel.classList.add('hidden');
-    detailBg.style.backgroundImage = 'url("/images/evren.jpg")';
+    detailBg.style.backgroundImage = 'url("/beynimin-haritasi-pro/images/evren.jpg")';
     resetCamera();
 }
 
@@ -987,7 +987,7 @@ function playMusic() {
             } else {
                 musicPlaying = false;
                 musicToggle.textContent = '🔈 Müziği Aç';
-                console.warn('Müzik çalınamadı. public/music/ambient.mp3 yolunu kontrol et.');
+                console.warn('Müzik çalınamadı. public/beynimin-haritasi-pro/music/ambient.mp3 yolunu kontrol et.');
             }
         });
 }
