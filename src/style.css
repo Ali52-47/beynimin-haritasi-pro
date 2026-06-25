@@ -618,3 +618,91 @@ canvas {
         letter-spacing: 4px;
     }
 }
+@media (max-width: 600px) {
+    html,
+    body {
+        overflow: hidden;
+    }
+
+    .hud {
+        top: 10px;
+        width: 94%;
+    }
+
+    .hud h2 {
+        font-size: 28px;
+    }
+
+    .hud p {
+        font-size: 12px;
+    }
+
+    .hud .kicker {
+        font-size: 10px;
+        letter-spacing: 3px;
+    }
+
+    .music-toggle {
+        top: auto;
+        right: 14px;
+        bottom: 14px;
+        padding: 10px 14px;
+        font-size: 12px;
+    }
+
+    .detail-panel {
+        padding: 18px;
+    }
+
+    .detail-hero {
+        grid-template-columns: 1fr;
+        padding: 22px;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .detail-icon {
+        width: 140px;
+        height: 140px;
+        font-size: 60px;
+        margin: 0 auto;
+    }
+
+    .detail-hero h2 {
+        font-size: 38px;
+    }
+
+    .detail-hero p {
+        font-size: 15px;
+    }
+
+    .detail-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .connection-box {
+        padding: 20px;
+    }
+
+    .intro-card {
+        width: 92%;
+        padding: 34px 20px;
+    }
+
+    .intro-card h1 {
+        font-size: 34px;
+    }
+
+    .intro-text {
+        font-size: 14px;
+    }
+
+    .start-button {
+        width: 145px;
+        height: 145px;
+    }
+
+    .brain-icon {
+        font-size: 68px;
+    }
+}

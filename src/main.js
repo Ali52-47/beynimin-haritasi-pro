@@ -34,14 +34,28 @@ let journeyStarted = false;
 let musicPlaying = false;
 let hoveredNode = null;
 
+const isMobile = window.innerWidth <= 600;
+const mobilePositionScale = isMobile ? 0.72 : 1;
+const defaultCameraZ = isMobile ? 68 : 47;
+
+/* =========================================================
+   DOSYA YOLLARI
+========================================================= */
+
+const BASE_PATH = '/beynimin-haritasi-pro';
+
+function assetPath(path) {
+    return `${BASE_PATH}${path}`;
+}
+
 /* =========================================================
    MÜZİK
 ========================================================= */
 
 const musicPaths = [
-    '/beynimin-haritasi-pro/music/ambient.mp3',
-    '/beynimin-haritasi-pro/music/ambiment.mp3',
-    '/beynimin-haritasi-pro/music/music.mp3'
+    assetPath('/music/ambient.mp3'),
+    assetPath('/music/ambiment.mp3'),
+    assetPath('/music/music.mp3')
 ];
 
 let activeMusicIndex = 0;
@@ -67,7 +81,7 @@ const interests = [
         title: 'Yazılım',
         icon: '💻',
         color: '#38bdf8',
-        backgroundImage: '/beynimin-haritasi-pro/images/software.png',
+        backgroundImage: assetPath('/images/software.png'),
         basePosition: new THREE.Vector3(0, 12.3, 0),
         motionRadius: 0.42,
         motionSpeed: 0.70,
@@ -90,7 +104,7 @@ const interests = [
         title: 'Üniversite',
         icon: '🎓',
         color: '#22c55e',
-        backgroundImage: '/beynimin-haritasi-pro/images/university.png',
+        backgroundImage: assetPath('/images/university.png'),
         basePosition: new THREE.Vector3(12.2, 9.3, 0),
         motionRadius: 0.42,
         motionSpeed: 0.60,
@@ -113,7 +127,7 @@ const interests = [
         title: 'Futbol',
         icon: '⚽',
         color: '#facc15',
-        backgroundImage: '/beynimin-haritasi-pro/images/fenerbahce.png',
+        backgroundImage: assetPath('/images/fenerbahce.png'),
         basePosition: new THREE.Vector3(17.2, 2.2, 0),
         motionRadius: 0.40,
         motionSpeed: 0.55,
@@ -136,7 +150,7 @@ const interests = [
         title: 'Projeler',
         icon: '🚀',
         color: '#fb7185',
-        backgroundImage: '/beynimin-haritasi-pro/images/projects.png',
+        backgroundImage: assetPath('/images/projects.png'),
         basePosition: new THREE.Vector3(13.8, -8.8, 0),
         motionRadius: 0.42,
         motionSpeed: 0.64,
@@ -159,7 +173,7 @@ const interests = [
         title: 'Teknoloji',
         icon: '🤖',
         color: '#a855f7',
-        backgroundImage: '/beynimin-haritasi-pro/images/technology.png',
+        backgroundImage: assetPath('/images/technology.png'),
         basePosition: new THREE.Vector3(6.0, -13.2, 0),
         motionRadius: 0.40,
         motionSpeed: 0.58,
@@ -182,7 +196,7 @@ const interests = [
         title: 'Tarih',
         icon: '🏛️',
         color: '#f97316',
-        backgroundImage: '/beynimin-haritasi-pro/images/history.png',
+        backgroundImage: assetPath('/images/history.png'),
         basePosition: new THREE.Vector3(-6.0, -13.2, 0),
         motionRadius: 0.40,
         motionSpeed: 0.56,
@@ -205,7 +219,7 @@ const interests = [
         title: 'Kuantum',
         icon: '⚛️',
         color: '#06b6d4',
-        backgroundImage: '/beynimin-haritasi-pro/images/quantum.png',
+        backgroundImage: assetPath('/images/quantum.png'),
         basePosition: new THREE.Vector3(-13.8, -8.8, 0),
         motionRadius: 0.40,
         motionSpeed: 0.54,
@@ -228,7 +242,7 @@ const interests = [
         title: 'Diziler',
         icon: '🎬',
         color: '#ec4899',
-        backgroundImage: '/beynimin-haritasi-pro/images/series.png',
+        backgroundImage: assetPath('/images/series.png'),
         basePosition: new THREE.Vector3(-17.2, 2.2, 0),
         motionRadius: 0.40,
         motionSpeed: 0.52,
@@ -251,7 +265,7 @@ const interests = [
         title: 'Siber Güvenlik',
         icon: '🛡️',
         color: '#10b981',
-        backgroundImage: '/beynimin-haritasi-pro/images/cyber_security.png',
+        backgroundImage: assetPath('/images/cyber_security.png'),
         basePosition: new THREE.Vector3(-12.2, 9.3, 0),
         motionRadius: 0.42,
         motionSpeed: 0.62,
@@ -279,14 +293,14 @@ const scene = new THREE.Scene();
 const textureLoader = new THREE.TextureLoader();
 
 textureLoader.load(
-    '/beynimin-haritasi-pro/images/evren.jpg',
+    assetPath('/images/evren.jpg'),
     function (texture) {
         texture.colorSpace = THREE.SRGBColorSpace;
         scene.background = texture;
     },
     undefined,
     function () {
-        console.warn('Evren görseli yüklenemedi. public/beynimin-haritasi-pro/images/evren.jpg yolunu kontrol et.');
+        console.warn('Evren görseli yüklenemedi. public/images/evren.jpg yolunu kontrol et.');
     }
 );
 
@@ -297,7 +311,8 @@ const camera = new THREE.PerspectiveCamera(
     1200
 );
 
-camera.position.set(0, 0, 47);
+camera.position.set(0, 0, defaultCameraZ);
+
 const cameraTarget = new THREE.Vector3(0, -1.7, 0);
 
 const renderer = new THREE.WebGLRenderer({
@@ -330,7 +345,7 @@ pointLight.position.set(0, 1.8, 16);
 scene.add(pointLight);
 
 const universeGroup = new THREE.Group();
-universeGroup.position.y = -2.1;
+universeGroup.position.y = isMobile ? -1.2 : -2.1;
 scene.add(universeGroup);
 
 const clickableObjects = [];
@@ -338,6 +353,18 @@ const signalObjects = [];
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
+
+/* =========================================================
+   YARDIMCI FONKSİYONLAR
+========================================================= */
+
+function getResponsivePosition(vector) {
+    return new THREE.Vector3(
+        vector.x * mobilePositionScale,
+        vector.y * mobilePositionScale,
+        vector.z
+    );
+}
 
 /* =========================================================
    TEXTURE
@@ -375,7 +402,7 @@ createConnections();
 ========================================================= */
 
 function createStarField() {
-    const count = 1000;
+    const count = isMobile ? 650 : 1000;
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
 
@@ -400,7 +427,7 @@ function createStarField() {
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-        size: 0.18,
+        size: isMobile ? 0.16 : 0.18,
         map: glowTexture,
         transparent: true,
         opacity: 0.68,
@@ -418,7 +445,7 @@ function createStarField() {
 ========================================================= */
 
 function createNebulaDust() {
-    const count = 450;
+    const count = isMobile ? 300 : 450;
     const positions = new Float32Array(count * 3);
 
     for (let i = 0; i < count; i++) {
@@ -503,7 +530,7 @@ function createCentralBrain() {
     ring2.rotation.y = Math.PI / 3;
     centerGroup.add(ring2);
 
-    const label = createTextSprite('🧠', 'Zihin Ağlarım', '#7dd3fc', 0.86);
+    const label = createTextSprite('🧠', 'Zihin Ağlarım', '#7dd3fc', isMobile ? 0.72 : 0.86);
     label.position.set(0, -0.45, 2.55);
     centerGroup.add(label);
 
@@ -518,7 +545,7 @@ function createCentralBrain() {
 function createInterestPlanets() {
     interests.forEach(function (node) {
         const group = new THREE.Group();
-        group.position.copy(node.basePosition);
+        group.position.copy(getResponsivePosition(node.basePosition));
         group.userData.node = node;
 
         const sphere = new THREE.Mesh(
@@ -563,8 +590,8 @@ function createInterestPlanets() {
         ring.userData.node = node;
         group.add(ring);
 
-        const label = createTextSprite(node.icon, node.title, node.color, 1.08);
-        label.position.set(0, -2.25, 0.18);
+        const label = createTextSprite(node.icon, node.title, node.color, isMobile ? 0.86 : 1.08);
+        label.position.set(0, isMobile ? -2.0 : -2.25, 0.18);
         group.add(label);
 
         node.group = group;
@@ -756,7 +783,7 @@ function createTextSprite(icon, title, color, scale = 1) {
 }
 
 /* =========================================================
-   MOUSE
+   MOUSE / TOUCH
 ========================================================= */
 
 function onPointerMove(event) {
@@ -843,8 +870,8 @@ function unhoverPlanet(node) {
 ========================================================= */
 
 function focusPlanet(node) {
-    const targetPosition = node.group.position.clone().multiplyScalar(0.34);
-    targetPosition.z = 13.5;
+    const targetPosition = node.group.position.clone().multiplyScalar(isMobile ? 0.18 : 0.34);
+    targetPosition.z = isMobile ? 24 : 13.5;
 
     gsap.to(camera.position, {
         x: targetPosition.x,
@@ -867,7 +894,7 @@ function resetCamera() {
     gsap.to(camera.position, {
         x: 0,
         y: 0,
-        z: 47,
+        z: defaultCameraZ,
         duration: 1.1,
         ease: 'power3.inOut'
     });
@@ -886,7 +913,7 @@ function resetCamera() {
 ========================================================= */
 
 function openDetail(node) {
-    const bgPath = node.backgroundImage || '/beynimin-haritasi-pro/images/evren.jpg';
+    const bgPath = node.backgroundImage || assetPath('/images/evren.jpg');
 
     detailBg.style.opacity = '0';
 
@@ -928,7 +955,7 @@ function openDetail(node) {
 
 function closeDetailPanel() {
     detailPanel.classList.add('hidden');
-    detailBg.style.backgroundImage = 'url("/beynimin-haritasi-pro/images/evren.jpg")';
+    detailBg.style.backgroundImage = `url("${assetPath('/images/evren.jpg')}")`;
     resetCamera();
 }
 
@@ -952,7 +979,7 @@ function startJourney(event) {
     musicToggle.classList.remove('hidden');
 
     gsap.to(camera.position, {
-        z: 47,
+        z: defaultCameraZ,
         duration: 2.1,
         ease: 'power3.inOut'
     });
@@ -987,7 +1014,7 @@ function playMusic() {
             } else {
                 musicPlaying = false;
                 musicToggle.textContent = '🔈 Müziği Aç';
-                console.warn('Müzik çalınamadı. public/beynimin-haritasi-pro/music/ambient.mp3 yolunu kontrol et.');
+                console.warn('Müzik çalınamadı. public/music/ambient.mp3 yolunu kontrol et.');
             }
         });
 }
@@ -1029,9 +1056,10 @@ function animate() {
 
     interests.forEach((node, index) => {
         const angle = elapsed * node.motionSpeed + node.motionOffset;
+        const responsiveBase = getResponsivePosition(node.basePosition);
 
-        const x = node.basePosition.x + Math.cos(angle) * node.motionRadius;
-        const y = node.basePosition.y + Math.sin(angle) * node.motionRadius;
+        const x = responsiveBase.x + Math.cos(angle) * node.motionRadius;
+        const y = responsiveBase.y + Math.sin(angle) * node.motionRadius;
         const z = Math.sin(elapsed * 0.9 + index) * 0.30;
 
         node.group.position.set(x, y, z);
